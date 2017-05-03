@@ -1,26 +1,30 @@
 from pr2 import *
 
-pathCost = 0;
-emptyRoomsNumbers = CountEmptyRooms(table ,l ,i = 0);
 
-def A_Star(table, l ,emptyRoomsNumbers ,pathCost = 0) :
+emptyRoomsNumbers = CountEmptyRooms(table ,l);
+
+def A_Star(table, l ,emptyRoomsNumbers) :
 
 	if emptyRoomsNumbers == 0 :
 
 		return True;
 
 	index = 0;
+	#huresticValue = infinite;
 
 	for j in range(len(table)) :
 
 		if table[j] == 0 : 
 
-			#use calcHurestic function to calculate hurestic amount and save the index of this room in index variable
+			temp = calcHurestic(table ,l ,j);
+			if(temp < huresticValue):
+
+				index = j;
+				huresticValue = temp;
 
 	emptyRoomsNumbers--;
-	pathCost++;
 
-	for j in range(len(table)) : 
+	for j in range(l * l) : 
 
 		table[index] = j+1;
 
@@ -28,7 +32,7 @@ def A_Star(table, l ,emptyRoomsNumbers ,pathCost = 0) :
 
 			-continue;
 
-		if A_Star(table ,l ,emptyRoomsNumbers ,pathCost) :
+		if A_Star(table ,l ,emptyRoomsNumbers) :
 
 			return True;
 
