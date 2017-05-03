@@ -1,6 +1,8 @@
 #! /usr/bin/env python3
 import math
 
+
+#print entire table
 def print_table(table, l, e = "\t", line = "_______"):
 	for i1 in range(l):
 		if i1 > 0:
@@ -10,15 +12,17 @@ def print_table(table, l, e = "\t", line = "_______"):
 		for i2 in range(l):
 			for j in range(l):
 				if j > 0:
-					print("|", end = e)
+					print("|", end = e) 
 				for k in range(l):
 					print([table[i1 * l * l * l + i2 * l * l + j * l + k], "."][table[i1 * l * l * l + i2 * l * l + j * l + k] == 0], end = e)
 					# print(i1 * l * l * l + i2 * l * l + j * l + k, end = "\t")
 			print("")
 
+#return the index of the room in table
 def get_index(coord, l):
 	return coord[1] * l * l + coord[0]
 
+#check if room assignment is valid or not
 def validate(table, l, i):
 	coord  = (i % (l * l), i // (l * l))
 	# print ("%d %d : %r" % (i, get_index(coord, l), coord))
@@ -36,6 +40,8 @@ def validate(table, l, i):
 				return False
 	return True
 
+
+#reading input from file
 def get_input():
 	rin = input().split(" ")
 	rin[1] = rin[1][1:-1]
@@ -44,3 +50,37 @@ def get_input():
 	for i in range(len(table)):
 		table[i] = int(table[i])
 	return (table, l)
+
+
+#count empty rooms
+def countEmptyRooms(table ,l) :
+
+	emptyRoomsNumbers = 0;
+
+	for i in range(len(table)) : 
+
+		if table[i] == 0 :
+
+			emptyRoomsNumbers++;
+
+	return emptyRoomsNumbers;
+
+
+#paramters: table and coordination of room
+#return type: hurestic amount of room
+def calcHurestic(table , l ,index) : 
+
+	returnValue = 0;
+
+	for j in range(l * l) : 
+
+		table[index] = j + 1;
+
+		#complete validate function's parameters
+		if validate(table ,l ,index) : 
+
+			returnValue++;
+
+	table[index] = 0;
+
+	return returnValue;

@@ -2,6 +2,7 @@
 
 from pr2 import *
 
+#dfs implementing
 def dfs(table, l, i = 0):
 	if i >= len(table):
 		# print_table(table, l, " ", "_")
