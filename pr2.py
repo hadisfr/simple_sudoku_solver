@@ -25,13 +25,9 @@ def get_index(coord, l):
 #check if room assignment is valid or not
 def validate(table, l, i):
 	coord  = (i % (l * l), i // (l * l))
-	# print ("%d %d : %r" % (i, get_index(coord, l), coord))
 	for j in range(l * l):
 		if (table[i] == table[get_index((j, coord[1]), l)] and i != get_index((j, coord[1]), l)) or\
 		(table[i] == table[get_index((coord[0], j), l)] and i != get_index((coord[0], j), l)):
-			# if i == 17:
-				# print(l, table[get_index((coord[0], j), l)], table[get_index((j, coord[1]), l)], table[i])
-				# print(i, get_index((coord[0], j), l), get_index((j, coord[1]), l))
 			return False
 	square = ((coord[0] // l) * l, (coord[1] // l) * l)
 	for j in range(l):
