@@ -17,21 +17,19 @@ def complete_validate(table, l, i):
 				conflict_list.add(get_index((square[0] + j, square[1] + k), l))
 	return ((len(conflict_list) > 0), conflict_list)
 
-def solve(table, domains, order_list, l, index = 0):
-	if index >= len(order_list):
+def solve(table, l, i = 0):
+	if i >= l * l * l * l:
 		return (True, set())
 
-	i = order_list[index]
-
 	if table[i] != 0:
-		return solve(table, domains, order_list, l, index + 1)
+		return solve(table, l, i + 1)
 
 	conflict_list = set()
-	for j in domains[i]:
-		table[i] = j
+	for j in range(l * l):
+		table[i] = j + 1
 		(had_conflict, local_conflict_list) = complete_validate(table, l, i)
 		if not had_conflict:
-			(child_is_ok, child_conflict_list) = solve(table, domains, order_list, l, index + 1)
+			(child_is_ok, child_conflict_list) = solve(table, l, i + 1)
 			if child_is_ok:
 				return (True, set())
 			else:
@@ -47,42 +45,14 @@ def solve(table, domains, order_list, l, index = 0):
 	table[i] = 0
 	return (False, conflict_list)
 
-def make_domains(table, l):
-	domains = []
-	for i in range(len(table)):
-		domains.append(set())
-		for j in range(l * l):
-			domains[i].add(j + 1)
-	for i in range(len(table)):
-		if table[i] != 0:
-			coord  = (i % (l * l), i // (l * l))
-			for j in range(l * l):
-				if get_index((j, coord[1]), l) != i and table[i] in domains[get_index((j, coord[1]), l)]:
-					domains[get_index((j, coord[1]), l)].remove(table[i])
-				if get_index((coord[0], j), l) != i and table[i] in domains[get_index((coord[0], j), l)]:
-					domains[get_index((coord[0], j), l)].remove(table[i])
-			square = ((coord[0] // l) * l, (coord[1] // l) * l)
-			for j in range(l):
-				for k in range(l):
-					if get_index((square[0] + j, square[1] + k), l) != i and \
-					table[i] in domains[get_index((square[0] + j, square[1] + k), l)]:
-						domains[get_index((square[0] + j, square[1] + k), l)].remove(table[i])
-
-	order_list = []
-	for i in range(len(table)):
-		order_list.append((i, len(domains[i])))
-
-	order_list.sort(key=lambda x: x[1])
-
-	return (domains, [x[0] for x in order_list])
-
 if __name__ == '__main__':
 	(table, l) = get_input()
 
 	print_table(table, l, " ", "_")
 	print("")
-	(domains, order_list) = make_domains(table, l)
-	if solve(table, domains, order_list, l)[0]:
+	if solve(table, l)[0]:
 		print_table(table, l, " ", "_")
 	else:
 		print("Could not been filled.")
+
+
