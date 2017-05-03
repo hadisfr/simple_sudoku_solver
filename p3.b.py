@@ -34,14 +34,14 @@ def solve(table, l, i = 0):
 				return (True, set())
 			else:
 				if i not in child_conflict_list:
-					# print(i, table[i], conflict_list, "Child CF: ", child_conflict_list)
-					# print_table(table, l, " ", "_")
+					print(i, table[i], conflict_list, "Child CF: ", child_conflict_list)
+					print_table(table, l, " ", "_")
 					table[i] = 0
 					return (False, child_conflict_list)
 		else:
 			conflict_list = conflict_list.union(local_conflict_list)
-	# print(i, table[i], conflict_list)
-	# print_table(table, l, " ", "_")
+	print(i, table[i], conflict_list)
+	print_table(table, l, " ", "_")
 	table[i] = 0
 	return (False, conflict_list)
 

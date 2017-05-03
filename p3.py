@@ -17,21 +17,19 @@ def complete_validate(table, l, i):
 				conflict_list.add(get_index((square[0] + j, square[1] + k), l))
 	return ((len(conflict_list) > 0), conflict_list)
 
-def solve(table, domains, order_list, l, index = 0):
-	if index >= len(order_list):
+def solve(table, domains, l, i = 0):
+	if i >= len(table):
 		return (True, set())
 
-	i = order_list[index]
-
 	if table[i] != 0:
-		return solve(table, domains, order_list, l, index + 1)
+		return solve(table, domains, l, i + 1)
 
 	conflict_list = set()
 	for j in domains[i]:
 		table[i] = j
 		(had_conflict, local_conflict_list) = complete_validate(table, l, i)
 		if not had_conflict:
-			(child_is_ok, child_conflict_list) = solve(table, domains, order_list, l, index + 1)
+			(child_is_ok, child_conflict_list) = solve(table, domains, l, i + 1)
 			if child_is_ok:
 				return (True, set())
 			else:
@@ -82,7 +80,7 @@ if __name__ == '__main__':
 	print_table(table, l, " ", "_")
 	print("")
 	(domains, order_list) = make_domains(table, l)
-	if solve(table, domains, order_list, l)[0]:
+	if solve(table, domains, l)[0]:
 		print_table(table, l, " ", "_")
 	else:
 		print("Could not been filled.")
