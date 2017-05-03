@@ -17,7 +17,6 @@ def dfs(table, l, i = 0):
 	table[i] = 0
 	return False
 
-
 if __name__ == '__main__':
 	(table, l) = get_input()
 
