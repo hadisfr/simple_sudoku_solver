@@ -1,5 +1,4 @@
 #! /usr/bin/env python3
-
 import math
 
 def print_table(table, l, e = "\t", line = "_______"):
@@ -37,33 +36,11 @@ def validate(table, l, i):
 				return False
 	return True
 
-def dfs(table, l, i = 0):
-	if i >= len(table):
-		# print_table(table, l, " ", "_")
-		return True
-	if table[i] != 0:
-		return dfs(table, l, i + 1)
-	for j in range(l * l):
-		table[i] = j + 1
-		if not validate(table, l, i):
-			continue
-		if dfs(table, l, i + 1):
-			return True
-	table[i] = 0
-	return False
-
-
-if __name__ == '__main__':
+def get_input():
 	rin = input().split(" ")
 	rin[1] = rin[1][1:-1]
 	l = int(math.sqrt(int(rin[0])))
 	table = rin[1].split(",")
 	for i in range(len(table)):
 		table[i] = int(table[i])
-
-	print_table(table, l, " ", "_")
-	print("")
-	if dfs(table, l):
-		print_table(table, l, " ", "_")
-	else:
-		print("Could not been filled.")
+	return (table, l)
