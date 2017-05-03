@@ -1,7 +1,6 @@
+#! /usr/bin/env python3
+
 from pr2 import *
-
-
-emptyRoomsNumbers = CountEmptyRooms(table ,l);
 
 def A_Star(table, l ,emptyRoomsNumbers) :
 
@@ -10,7 +9,7 @@ def A_Star(table, l ,emptyRoomsNumbers) :
 		return True;
 
 	index = 0;
-	#huresticValue = infinite;
+	huresticValue = l * l + 1; # infinite
 
 	for j in range(len(table)) :
 
@@ -22,7 +21,7 @@ def A_Star(table, l ,emptyRoomsNumbers) :
 				index = j;
 				huresticValue = temp;
 
-	emptyRoomsNumbers--;
+	emptyRoomsNumbers -= 1;
 
 	for j in range(l * l) : 
 
@@ -30,7 +29,7 @@ def A_Star(table, l ,emptyRoomsNumbers) :
 
 		if not validate(table ,l ,index) :
 
-			-continue;
+			continue;
 
 		if A_Star(table ,l ,emptyRoomsNumbers) :
 
@@ -38,3 +37,14 @@ def A_Star(table, l ,emptyRoomsNumbers) :
 
 	table[index] = 0;
 	return False;
+
+if __name__ == '__main__':
+	(table, l) = get_input()
+
+	print_table(table, l, " ", "_")
+	print("")
+	if A_Star(table, l, countEmptyRooms(table, l)):
+		print_table(table, l, " ", "_")
+	else:
+		print("Could not been filled.")
+

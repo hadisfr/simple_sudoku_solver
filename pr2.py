@@ -1,6 +1,6 @@
 #! /usr/bin/env python3
-import math
 
+import math
 
 #print entire table
 def print_table(table, l, e = "\t", line = "_______"):
@@ -61,7 +61,7 @@ def countEmptyRooms(table ,l) :
 
 		if table[i] == 0 :
 
-			emptyRoomsNumbers++;
+			emptyRoomsNumbers += 1;
 
 	return emptyRoomsNumbers;
 
@@ -79,8 +79,9 @@ def calcHurestic(table , l ,index) :
 		#complete validate function's parameters
 		if validate(table ,l ,index) : 
 
-			returnValue++;
+			returnValue += 1;
 
 	table[index] = 0;
 
 	return returnValue;
+
