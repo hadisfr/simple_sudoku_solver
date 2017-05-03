@@ -2,6 +2,28 @@
 
 from pr2 import *
 
+
+
+#paramters: table and coordination of room
+#return type: hurestic amount of room
+def calcHurestic(table , l ,index) : 
+
+	returnValue = 0;
+
+	for j in range(l * l) : 
+
+		table[index] = j + 1;
+
+		#complete validate function's parameters
+		if validate(table ,l ,index) : 
+
+			returnValue += 1;
+
+	table[index] = 0;
+
+	return returnValue;
+
+
 def A_Star(table, l ,emptyRoomsNumbers) :
 
 	if emptyRoomsNumbers == 0 :
